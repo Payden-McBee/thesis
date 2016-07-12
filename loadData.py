@@ -145,24 +145,15 @@ trainingSet4Blabels = labels4B[0:trainingEnd4B]
 testSet4Bfeatures = featureVector4B[trainingEnd4B:,:]
 testSet4Blabels = labels4B[trainingEnd4B:]
 
-np.savetxt('trainingSet4Bfeatures',trainingSet4Bfeatures,fmt='%10.5f')
-fl = open('filename.csv', 'w')
-
-writer = csv.writer(fl)
-#writer.writerow(['label1', 'label2', 'label3']) #if needed
-for values in trainingSet4Bfeatures:
-    writer.writerow(values)
-
-fl.close() 
-
-np.savetxt('trainingSet4Blabels',trainingSet4Blabels)
-np.savetxt('testSet4Bfeatures',testSet4Bfeatures)
-np.savetxt('testSet4Blabels',testSet4Blabels)
+np.save('trainingSet4Bfeatures',trainingSet4Bfeatures)
+np.save('trainingSet4Blabels',trainingSet4Blabels)
+np.save('testSet4Bfeatures',testSet4Bfeatures)
+np.save('testSet4Blabels',testSet4Blabels)
 
 question9B = 16
 labels9B = np.zeros(len(surResPerVperQ[question9B]))
 for currentVil in range(0,int(numNewVilPerQ[question9B])):
-    if surResPerVperQ[question9B][currentVil] > 1.5:
+    if surResPerVperQ[question9B][currentVil] > 0.5:
         labels9B[currentVil] = 0
     else:
         labels9B[currentVil] = 1
@@ -174,10 +165,10 @@ trainingSet9Blabels = labels9B[0:trainingEnd9B]
 testSet9Bfeatures = featureVector9B[trainingEnd9B:,:]
 testSet9Blabels = labels9B[trainingEnd9B:]        
 
-np.savetxt('trainingSet9Bfeatures',trainingSet9Bfeatures)
-np.savetxt('trainingSet9Blabels',trainingSet9Blabels)
-np.savetxt('testSet9Bfeatures',testSet9Bfeatures)
-np.savetxt('testSet9Blabels',testSet9Blabels)
+np.save('trainingSet9Bfeatures',trainingSet9Bfeatures)
+np.save('trainingSet9Blabels',trainingSet9Blabels)
+np.save('testSet9Bfeatures',testSet9Bfeatures)
+np.save('testSet9Blabels',testSet9Blabels)
 
 
 print("terminado")
