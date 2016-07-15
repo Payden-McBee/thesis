@@ -4,26 +4,44 @@ Created on Mon Jul 11 15:55:25 2016
 
 @author: Payden McBee
 """
-from sklearn import svm 
+
+
 from sklearn.metrics import accuracy_score
 import numpy as np
 
-trainingSet4Bfeatures=np.load('trainingSet4Bfeatures.npy')
-trainingSet4Blabels=np.load('trainingSet4Blabels.npy')
-testSet4Bfeatures=np.load('testSet4Bfeatures.npy')
-testSet4Blabels=np.load('testSet4Blabels.npy')
+from sklearn import svm 
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.lda import LDA
 
-clf = svm.SVC()
-clf.fit(trainingSet4Bfeatures, trainingSet4Blabels) 
-predictions = clf.predict(testSet4Bfeatures)
-print(accuracy_score(testSet4Blabels,predictions))
+if 1:
+    trainingSet_features=np.load('trainingSet4Bfeatures.npy')
+    trainingSet_labels=np.load('trainingSet4Blabels.npy')
+    testSet_features=np.load('testSet4Bfeatures.npy')
+    testSet_labels=np.load('testSet4Blabels.npy')
+else:
+    trainingSet_features=np.load('trainingSet9Bfeatures.npy')
+    trainingSet_labels=np.load('trainingSet9Blabels.npy')
+    testSet_features=np.load('testSet9Bfeatures.npy')
+    testSet_labels=np.load('testSet9Blabels.npy')  
 
-trainingSet9Bfeatures=np.load('trainingSet9Bfeatures.npy')
-trainingSet9Blabels=np.load('trainingSet9Blabels.npy')
-testSet9Bfeatures=np.load('testSet9Bfeatures.npy')
-testSet9Blabels=np.load('testSet9Blabels.npy')  
+nnC = KNeighborsClassifier(n_neighbors=5)
+nnC.fit(trainingSet_features, trainingSet_labels) 
+nnC_predictions = nnC.predict(testSet_features)
+print(accuracy_score(testSet_labels,nnC_predictions))
 
-clf2 = svm.SVC()
-clf2.fit(trainingSet9Bfeatures, trainingSet9Blabels) 
-predictions2 = clf2.predict(testSet9Bfeatures)
-print(accuracy_score(testSet9Blabels,predictions2))
+svmC = svm.SVC()
+svmC.fit(trainingSet_features, trainingSet_labels) 
+svmCpredictions = svmC.predict(testSet_features)
+print(accuracy_score(testSet_labels,svmCpredictions))
+
+
+rfC = RandomForestClassifier(n_estimators=100)
+rfC.fit(trainingSet_features, trainingSet_labels) 
+rfC_predictions = rfC.predict(testSet_features)
+print(accuracy_score(testSet_labels,rfC_predictions))
+
+ldaC = LDA(solver='lsqr')
+ldaC.fit(trainingSet_features, trainingSet_labels) 
+ldaC_predictions = ldaC.predict(testSet_features)
+print(accuracy_score(testSet_labels,ldaC_predictions))
